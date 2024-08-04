@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  position: relative;
+  padding: 20px;
 }
 
 .App-logo {
@@ -35,4 +37,25 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.trending{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.custom-card{
+  flex: 30%;
+}
+
+.custom-select{
+  margin-bottom: 20px;
+  width: 100px;
+}
+
+.text{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
