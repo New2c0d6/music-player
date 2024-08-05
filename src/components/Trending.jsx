@@ -16,17 +16,17 @@ function Trending({setSelected}) {
             redirect: "follow",
         };
 
-        fetch("https://v1.nocodeapi.com/noelkdev/spotify/skSYGjyrulnJiCEL/usersTop?type=tracks", requestOptions)
-            .then(response => response.json())
-            .then(result => {
-                setTrending(result.items);
-                setLoading(false);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-                setError(error);
-                setLoading(false);
-            });
+        // fetch("https://v1.nocodeapi.com/noelkdev/spotify/skSYGjyrulnJiCEL/usersTop?type=tracks", requestOptions)
+        //     .then(response => response.json())
+        //     .then(result => {
+        //         setTrending(result.items);
+        //         setLoading(false);
+        //     })
+        //     .catch(error => {
+        //         console.error('Error fetching data:', error);
+        //         setError(error);
+        //         setLoading(false);
+        //     });
     }, []);
 
     if (loading) {

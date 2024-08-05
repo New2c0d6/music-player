@@ -2,6 +2,7 @@
   text-align: center;
   position: relative;
   padding: 20px;
+  min-height: 100vh;
 }
 
 .App-logo {

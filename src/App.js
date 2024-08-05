@@ -1,49 +1,14 @@
-import logo from './logo.svg';
 import './App.css';
-import React, { useCallback, useEffect, useState } from 'react';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import { debounce, styled } from '@mui/material';
-import Player from './components/Player';
-import Trending from './components/Trending';
+import React from 'react';
+import { styled } from '@mui/material';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
+import Home from './pages/Home';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { AuthProvider } from './hooks/useAuth';
+import { ProtectedRoute } from './components/ProtectedRoute';
 
 function App() {
-
-  const [selected, setSelected] = useState({});
-  const [result, setResult] = useState([]);
-
-  // useEffect(() => {
-
-
-  // }, [])
-
-  const handleSearch = useCallback(debounce((searchParam) => {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    var requestOptions = {
-      method: "get",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    var requestOptions = {
-      method: "get",
-      headers: myHeaders,
-      redirect: "follow",
-
-    };
-
-    fetch(`https://v1.nocodeapi.com/noelkdev/spotify/skSYGjyrulnJiCEL/search?q==${searchParam}&type=track&perPage=10`, requestOptions)
-      .then(response => response.json())
-      .then(res => setResult(res.tracks.items))
-      .catch(error => console.log('error', error));
-  }, 600), []);
-
-  const handleSelection = (event, value) => {
-    setSelected(value);
-  }
 
   const WallPaper = styled('div')({
     position: 'absolute',
@@ -82,17 +47,21 @@ function App() {
   return (
     <div className="App">
       <WallPaper />
-      <Autocomplete
-        disablePortal
-        id="combo-box-demo"
-        className='custom-select'
-        options={result.map(result => ({ "label": result.name, "res": result }))}
-        sx={{ width: '100%'}}
-        onChange={handleSelection}
-        renderInput={(params) => <TextField {...params} label="Search Song" onChange={(e) => handleSearch(e.target.value)} />}
-      />
-      {selected?.label && <Player song={selected} />}
-      <Trending  setSelected={setSelected}/>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<SignIn />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route
+          path="/home"
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </AuthProvider>
     </div>
   );
 }
